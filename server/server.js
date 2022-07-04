@@ -1,5 +1,5 @@
 const express = require('express');
-//const db = FILL_ME_IN
+const db = require('./db.js')
 
 const app = express();
 const port = 3000;
@@ -12,5 +12,9 @@ app.listen(port, (req, res) => {
 });``
 
 app.get('/api/notes', (req, res) => {
-  //Write your route here!
+  db.queryAsync('Select * from notes')
+  .then((val) => {
+    res.status(200).send(val)
+  })
+  .catch((err) => {console.log('err in app.get')})
 });

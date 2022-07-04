@@ -1,6 +1,7 @@
 import React from 'react';
 import Notes from './components/Notes.jsx';
 import AddNote from './components/AddNote.jsx'
+var axios = require('axios');
 
 class App extends React.Component {
   constructor(props){
@@ -19,10 +20,19 @@ class App extends React.Component {
 
   pageRouter(){
     if(this.state.page === 'list'){
-      return <Notes />
+      return <Notes datas= {this.state.notes} />
     } else if (this.state.page === 'newNote'){
       return <AddNote/>
     }
+  }
+
+  componentDidMount() {
+    axios.get('/api/notes')
+    .then((val) => {
+      this.setState({notes: val.data[0]})
+      console.log(this.state.notes)
+    })
+    .catch((err) => {console.log('err in componentMount')})
   }
 
   render(){
