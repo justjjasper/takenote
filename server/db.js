@@ -8,22 +8,22 @@ const connection = mysql.createConnection({
   database: 'takenote'
 });
 
-const db = Promise.promisifyAll(connection, { multiArgs: true });
+const db = Promise.promisifyAll(connection);
 
-db.connectAsync()
-.then(() =>
-  db.queryAsync(
-    `CREATE TABLE IF NOT EXISTS notes (
-      id int NOT NULL AUTO_INCREMENT,
-      title varchar(255) NOT NULL,
-      category varchar(255) NOT NULL,
-      tagline varchar(255) NOT NULL,
-      note varchar(1024) NOT NULL,
-      status ENUM('None', 'Hidden', 'Starred') NOT NULL,
-      PRIMARY KEY (id)
-    )`
-  )
-)
+// db.connectAsync()
+// .then(() =>
+//   db.queryAsync(
+//     `CREATE TABLE IF NOT EXISTS notes (
+//       id int NOT NULL AUTO_INCREMENT,
+//       title varchar(255) NOT NULL,
+//       category varchar(255) NOT NULL,
+//       tagline varchar(255) NOT NULL,
+//       note varchar(1024) NOT NULL,
+//       status ENUM('None', 'Hidden', 'Starred') NOT NULL,
+//       PRIMARY KEY (id)
+//     )`
+//   )
+// )
 // .catch((err) => {console.log('err in db.connect')})
 // .then(() =>
 //     db.queryAsync(
@@ -42,6 +42,6 @@ db.connectAsync()
 //       `INSERT into notes (title, category, tagline, note) VALUES ("London Beer Flood of 1814", "History", "A catastrophic event in which 610,00 liters of beer killed 8 people and destroyed 2 homes.", "In London, in 1814, a vat containing over 610,00 liters of beer ruptured, causing other vats to burst. As a result, more than 1,470,000L of beer burst out into the streets. The London Beer Flood wave destroyed two homes and crumbled the wall of a nearby pub. 8 people died.")`
 //     )
 // )
-.catch((err) => {console.log('err within 3rd table')})
+// .catch((err) => {console.log('err within 3rd table')})
 
 module.exports = db;

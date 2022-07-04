@@ -10,8 +10,14 @@ class App extends React.Component {
       page: 'list',
       notes: []
     };
+
+    this.add = this.add.bind(this)
+    this.update = this.update.bind(this)
   }
 
+  update(id, context) {
+    axios.patch('/api/notes', { id: id, context: context})
+  }
   changePage(page){
     this.setState({
       page: page
@@ -20,16 +26,24 @@ class App extends React.Component {
 
   pageRouter(){
     if(this.state.page === 'list'){
-      return <Notes datas= {this.state.notes} />
+      return <Notes updateFunc={this.update} datas= {this.state.notes} />
     } else if (this.state.page === 'newNote'){
-      return <AddNote/>
+      return <AddNote addFunc={this.add} />
     }
+  }
+
+  add(tit, cat, tag, note) {
+    axios.post('/api/notes', {title: tit, category: cat, tagline: tag, note: note})
+    .then((val) => {
+      this.setState({notes: val.data})
+    })
+    .catch((err) => {console.log('err in axios.post')})
   }
 
   componentDidMount() {
     axios.get('/api/notes')
     .then((val) => {
-      this.setState({notes: val.data[0]})
+      this.setState({notes: val.data})
       console.log(this.state.notes)
     })
     .catch((err) => {console.log('err in componentMount')})

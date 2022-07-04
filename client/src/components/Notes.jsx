@@ -2,13 +2,13 @@ import React from 'react';
 import Note from '../components/Note.jsx'
 
 
-const Notes = ({datas}) => {
+const Notes = ({datas, updateFunc}) => {
 
   return (
    <div className="notes-list" >
      {datas.map((current) => {
        return (
-         <Note key={current.id} data={current}/>
+         <Note updatefunc={updateFunc} key={current.id} data={current}/>
        )
      })}
    </div>
